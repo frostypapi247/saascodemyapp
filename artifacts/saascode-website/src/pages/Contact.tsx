@@ -10,10 +10,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Phone, Mail, MessageCircle, Clock, MapPin, Send, CheckCircle } from "lucide-react";
 
 const contactInfo = [
-  { icon: Phone, label: "Phone", value: "+263 779067013", href: "tel:+263779067013" },
+  { icon: Phone, label: "Phone", value: "+263 779 067 012", href: "tel:+263779067012" },
   { icon: Mail, label: "Email", value: "info@saascode.net", href: "mailto:info@saascode.net" },
-  { icon: MessageCircle, label: "WhatsApp", value: "+263 779067013", href: "https://wa.me/263779067013" },
-  { icon: MapPin, label: "Location", value: "Zimbabwe, Southern Africa", href: "#" },
+  { icon: MessageCircle, label: "WhatsApp", value: "+263 779 067 012", href: "https://wa.me/263779067012" },
+  { icon: MapPin, label: "Location", value: "Harare, Zimbabwe", href: "https://maps.google.com/?q=Harare,Zimbabwe" },
 ];
 
 const hours = [
@@ -142,10 +142,10 @@ export default function Contact() {
                 <div className="h-12 w-12 rounded-full bg-brand-primary/20 flex items-center justify-center">
                   <MapPin className="h-6 w-6 text-brand-primary" />
                 </div>
-                <p className="font-semibold text-card-foreground">Zimbabwe, Southern Africa</p>
+                <p className="font-semibold text-card-foreground">Harare, Zimbabwe</p>
                 <p className="text-sm text-muted-foreground">Serving clients across the region</p>
                 <a
-                  href="https://maps.google.com/?q=Zimbabwe"
+                  href="https://maps.google.com/?q=Harare,Zimbabwe"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-brand-primary hover:underline"
@@ -260,7 +260,7 @@ export default function Contact() {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <p className="text-muted-foreground mb-4">Prefer to chat directly? We're on WhatsApp!</p>
             <Button asChild size="lg" className="bg-green-500 hover:bg-green-600 text-white gap-2 shadow-lg shadow-green-500/30">
-              <a href="https://wa.me/263779067013" target="_blank" rel="noopener noreferrer" data-testid="button-whatsapp">
+              <a href="https://wa.me/263779067012" target="_blank" rel="noopener noreferrer" data-testid="button-whatsapp">
                 <MessageCircle className="h-5 w-5" /> Chat on WhatsApp
               </a>
             </Button>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "wouter";
-import { Facebook, Instagram, Linkedin, Send } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Send, Phone, Mail, MapPin } from "lucide-react";
 import { SiTiktok } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="bg-brand-deep text-white pt-16 pb-8 border-t-4 border-brand-primary">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
           {/* Brand Col */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -33,6 +33,27 @@ export default function Footer() {
                 <SiTiktok className="h-5 w-5" />
               </a>
             </div>
+          </div>
+
+          {/* Contact Info */}
+          <div className="space-y-3">
+            <h4 className="font-heading font-semibold text-lg mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-1/2 after:h-1 after:bg-brand-primary">Contact Us</h4>
+            <a href="tel:+263779067012" className="flex items-center gap-3 text-gray-300 hover:text-brand-primary transition-colors text-sm">
+              <Phone className="h-4 w-4 text-brand-primary shrink-0" />
+              +263 779 067 012
+            </a>
+            <a href="mailto:info@saascode.net" className="flex items-center gap-3 text-gray-300 hover:text-brand-primary transition-colors text-sm">
+              <Mail className="h-4 w-4 text-brand-primary shrink-0" />
+              info@saascode.net
+            </a>
+            <div className="flex items-center gap-3 text-gray-300 text-sm">
+              <MapPin className="h-4 w-4 text-brand-primary shrink-0" />
+              Harare, Zimbabwe
+            </div>
+            <a href="https://wa.me/263779067012" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-gray-300 hover:text-brand-primary transition-colors text-sm">
+              <span className="h-4 w-4 text-brand-primary shrink-0 text-base leading-none">💬</span>
+              WhatsApp Us
+            </a>
           </div>
 
           {/* Quick Links */}

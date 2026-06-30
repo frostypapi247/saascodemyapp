@@ -21,7 +21,7 @@ export default function WhatsAppButton() {
       </AnimatePresence>
 
       <a
-        href="https://wa.me/263779067013"
+        href="https://wa.me/263779067012"
         target="_blank"
         rel="noopener noreferrer"
         data-testid="whatsapp-button"

@@ -431,7 +431,7 @@ export default function Services() {
                 <Link href="/contact">Get a Custom Quote</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-8">
-                <a href="https://wa.me/263779067013" target="_blank" rel="noopener noreferrer">WhatsApp Us Now</a>
+                <a href="https://wa.me/263779067012" target="_blank" rel="noopener noreferrer">WhatsApp Us Now</a>
               </Button>
             </div>
           </motion.div>
