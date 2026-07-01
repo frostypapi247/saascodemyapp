@@ -5,7 +5,7 @@ export default function LoadingScreen() {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), 2200);
+    const timer = setTimeout(() => setVisible(false), 1600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -48,7 +48,7 @@ export default function LoadingScreen() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            SAASCODE IT
+            SAAS-CODE
           </motion.h1>
           <motion.p
             className="text-blue-300 text-sm mb-8"
@@ -65,7 +65,7 @@ export default function LoadingScreen() {
               className="h-full bg-gradient-to-r from-[#109EF4] to-[#7B4DFF]"
               initial={{ width: "0%" }}
               animate={{ width: "100%" }}
-              transition={{ duration: 1.8, ease: "easeInOut" }}
+              transition={{ duration: 1.3, ease: "easeInOut" }}
             />
           </div>
         </motion.div>

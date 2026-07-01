@@ -1,6 +1,6 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { Link } from "wouter";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -88,6 +88,300 @@ const techStack = [
   { icon: SiPostgresql, name: "PostgreSQL" },
 ];
 
+const WORDS = ["Websites", "Mobile Apps", "Digital Marketing", "Brand Identity", "Cloud Hosting", "Video Content"];
+
+const PARTICLES = Array.from({ length: 60 }, (_, i) => ({
+  id: i,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: Math.random() * 2.5 + 0.5,
+  duration: 4 + Math.random() * 6,
+  delay: Math.random() * 5,
+  opacity: Math.random() * 0.5 + 0.15,
+}));
+
+const METEORS = Array.from({ length: 8 }, (_, i) => ({
+  id: i,
+  top: Math.random() * 60,
+  left: Math.random() * 100,
+  duration: 1.5 + Math.random() * 2,
+  delay: i * 1.8 + Math.random() * 3,
+}));
+
+const ORBS = [
+  { w: 700, h: 700, top: -200, right: -200, from: "#109EF4", to: "#1E56E6", dur: 12, delay: 0 },
+  { w: 600, h: 600, bottom: -150, left: -150, from: "#7B4DFF", to: "#153DAB", dur: 16, delay: 3 },
+  { w: 400, h: 400, top: "40%", left: "30%", from: "#1E56E6", to: "#7B4DFF", dur: 10, delay: 6 },
+];
+
+function HeroCinematic() {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [typing, setTyping] = useState(true);
+
+  useEffect(() => {
+    const word = WORDS[wordIndex];
+    if (typing) {
+      if (displayed.length < word.length) {
+        const t = setTimeout(() => setDisplayed(word.slice(0, displayed.length + 1)), 70);
+        return () => clearTimeout(t);
+      } else {
+        const t = setTimeout(() => setTyping(false), 1800);
+        return () => clearTimeout(t);
+      }
+    } else {
+      if (displayed.length > 0) {
+        const t = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 40);
+        return () => clearTimeout(t);
+      } else {
+        setWordIndex((p) => (p + 1) % WORDS.length);
+        setTyping(true);
+      }
+    }
+  }, [displayed, typing, wordIndex]);
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20" style={{ background: "linear-gradient(135deg, #040d1a 0%, #071628 40%, #0d1f3c 70%, #0a1535 100%)" }}>
+
+      {/* ── Animated gradient orbs ── */}
+      <div className="absolute inset-0 pointer-events-none">
+        {ORBS.map((orb, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: orb.w,
+              height: orb.h,
+              top: orb.top ?? "auto",
+              bottom: (orb as any).bottom ?? "auto",
+              left: orb.left ?? "auto",
+              right: orb.right ?? "auto",
+              background: `radial-gradient(circle, ${orb.from}22 0%, ${orb.to}08 70%, transparent 100%)`,
+              filter: "blur(60px)",
+            }}
+            animate={{
+              scale: [1, 1.15, 0.95, 1],
+              opacity: [0.6, 0.9, 0.6],
+              x: [0, 30, -20, 0],
+              y: [0, -20, 30, 0],
+            }}
+            transition={{ duration: orb.dur, repeat: Infinity, delay: orb.delay, ease: "easeInOut" }}
+          />
+        ))}
+      </div>
+
+      {/* ── Dot grid ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, #109EF415 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+          maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
+        }}
+      />
+
+      {/* ── Floating particles ── */}
+      <div className="absolute inset-0 pointer-events-none">
+        {PARTICLES.map((p) => (
+          <motion.div
+            key={p.id}
+            className="absolute rounded-full bg-white"
+            style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size, opacity: p.opacity }}
+            animate={{ y: [0, -30, 0], opacity: [p.opacity, p.opacity * 2.5, p.opacity] }}
+            transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
+          />
+        ))}
+      </div>
+
+      {/* ── Meteor streaks ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {METEORS.map((m) => (
+          <motion.div
+            key={m.id}
+            className="absolute h-px"
+            style={{ top: `${m.top}%`, left: `${m.left}%`, width: 120, transformOrigin: "left center", rotate: -25 }}
+            animate={{ x: ["-10%", "120%"], opacity: [0, 1, 0] }}
+            transition={{ duration: m.duration, repeat: Infinity, delay: m.delay, ease: "linear", repeatDelay: 6 + Math.random() * 4 }}
+          >
+            <div className="h-full w-full" style={{ background: "linear-gradient(90deg, transparent, #109EF4cc, #7B4DFF88, transparent)" }} />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* ── Glowing horizontal lines ── */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[20, 45, 70].map((top, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-full h-px"
+            style={{ top: `${top}%`, background: "linear-gradient(90deg, transparent 0%, #109EF410 30%, #1E56E618 50%, #109EF410 70%, transparent 100%)" }}
+            animate={{ opacity: [0.3, 0.7, 0.3] }}
+            transition={{ duration: 4 + i * 2, repeat: Infinity, delay: i * 1.5 }}
+          />
+        ))}
+      </div>
+
+      {/* ── Hexagon decorations ── */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[
+          { size: 120, top: "15%", left: "8%", delay: 0 },
+          { size: 80, top: "70%", right: "6%", delay: 1.5 },
+          { size: 60, top: "30%", right: "12%", delay: 3 },
+        ].map((hex, i) => (
+          <motion.div
+            key={i}
+            className="absolute border border-brand-primary/10 rounded-xl"
+            style={{ width: hex.size, height: hex.size, top: hex.top, left: (hex as any).left, right: (hex as any).right }}
+            animate={{ rotate: [0, 90, 180, 270, 360], opacity: [0.2, 0.5, 0.2] }}
+            transition={{ duration: 20 + i * 5, repeat: Infinity, delay: hex.delay, ease: "linear" }}
+          />
+        ))}
+      </div>
+
+      {/* ── Hero content ── */}
+      <div className="container mx-auto px-4 md:px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+        <motion.div initial="hidden" animate="visible" className="space-y-8">
+          <motion.div variants={fadeUp} custom={0}>
+            <Badge className="bg-brand-primary/20 text-brand-primary border-brand-primary/30 mb-4 px-4 py-1.5 text-sm font-medium backdrop-blur-sm">
+              ✦ Enterprise IT Solutions — Harare, Zimbabwe
+            </Badge>
+          </motion.div>
+
+          <motion.div variants={fadeUp} custom={1} className="space-y-3">
+            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight text-white">
+              We Build World-Class
+            </h1>
+            <div className="text-5xl lg:text-6xl font-extrabold leading-tight min-h-[1.2em] flex items-center">
+              <span className="bg-gradient-to-r from-[#109EF4] via-[#1E56E6] to-[#7B4DFF] bg-clip-text text-transparent">
+                {displayed}
+              </span>
+              <motion.span
+                className="ml-1 inline-block w-1 h-14 bg-brand-primary rounded-full"
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+              />
+            </div>
+            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight text-white/80">
+              For Your Business
+            </h1>
+          </motion.div>
+
+          <motion.p variants={fadeUp} custom={2} className="text-lg text-blue-200/80 max-w-xl leading-relaxed">
+            Transform your digital presence with professional websites, mobile apps, digital marketing, branding, and hosting — all under one roof.
+          </motion.p>
+
+          <motion.div variants={fadeUp} custom={3} className="flex flex-wrap gap-4">
+            <Button asChild size="lg" className="bg-gradient-to-r from-brand-primary to-brand-purple hover:opacity-90 text-white px-8 h-13 text-base shadow-2xl shadow-brand-primary/40 border-0" data-testid="hero-get-started">
+              <Link href="/contact">
+                <span className="flex items-center gap-2">Get Started <ArrowRight className="h-4 w-4" /></span>
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 h-13 text-base backdrop-blur-sm" data-testid="hero-view-portfolio">
+              <Link href="/portfolio">View Our Work</Link>
+            </Button>
+          </motion.div>
+
+          {/* Trust badges */}
+          <motion.div variants={fadeUp} custom={4} className="flex flex-wrap items-center gap-5 pt-2">
+            {[["100+", "Projects"], ["50+", "Clients"], ["5★", "Rating"]].map(([val, label]) => (
+              <div key={label} className="flex items-center gap-2">
+                <span className="text-brand-primary font-extrabold text-lg">{val}</span>
+                <span className="text-blue-300/70 text-sm">{label}</span>
+              </div>
+            ))}
+            <div className="h-4 w-px bg-white/20" />
+            <div className="flex items-center gap-2 text-blue-300/70 text-sm">
+              <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
+              Available for projects
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Orbit logo visual */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="flex items-center justify-center"
+        >
+          <div className="relative w-80 h-80 flex items-center justify-center">
+            {/* Glow base */}
+            <div className="absolute w-64 h-64 rounded-full" style={{ background: "radial-gradient(circle, #109EF430 0%, transparent 70%)", filter: "blur(20px)" }} />
+
+            {/* Orbit rings */}
+            {[
+              { size: "w-72 h-72", border: "border-brand-primary/25", dur: 22, dot: "bg-brand-primary", dotPos: "-top-2 left-1/2 -translate-x-1/2", dotSize: "w-4 h-4" },
+              { size: "w-52 h-52", border: "border-brand-purple/35", dur: -15, dot: "bg-brand-purple", dotPos: "-bottom-2 left-1/2 -translate-x-1/2", dotSize: "w-3 h-3" },
+              { size: "w-36 h-36", border: "border-brand-royal/30", dur: 10, dot: "bg-brand-royal", dotPos: "-right-1.5 top-1/2 -translate-y-1/2", dotSize: "w-2.5 h-2.5" },
+            ].map((ring, i) => (
+              <motion.div
+                key={i}
+                className={`absolute ${ring.size} rounded-full border ${ring.border}`}
+                animate={{ rotate: ring.dur > 0 ? 360 : -360 }}
+                transition={{ duration: Math.abs(ring.dur), repeat: Infinity, ease: "linear" }}
+              >
+                <div className={`absolute ${ring.dotPos} ${ring.dotSize} rounded-full ${ring.dot} shadow-lg`} />
+              </motion.div>
+            ))}
+
+            {/* Service icons orbiting */}
+            {[Globe, Smartphone, Palette, Megaphone].map((Icon, i) => {
+              const angle = (i / 4) * 2 * Math.PI;
+              const r = 148;
+              return (
+                <motion.div
+                  key={i}
+                  className="absolute h-9 w-9 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center shadow-lg"
+                  style={{ left: `calc(50% + ${Math.cos(angle) * r}px - 18px)`, top: `calc(50% + ${Math.sin(angle) * r}px - 18px)` }}
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+                >
+                  <motion.div animate={{ rotate: [0, -360] }} transition={{ duration: 22, repeat: Infinity, ease: "linear" }}>
+                    <Icon className="h-4 w-4 text-brand-primary" />
+                  </motion.div>
+                </motion.div>
+              );
+            })}
+
+            {/* Center logo */}
+            <div className="relative z-10">
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                style={{ background: "radial-gradient(circle, #7B4DFF40 0%, transparent 70%)" }}
+                animate={{ scale: [1, 1.3, 1] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+              <motion.img
+                src="/logo.jpg"
+                alt="Saascode"
+                className="h-24 w-24 rounded-full relative z-10 shadow-2xl ring-2 ring-brand-primary/40"
+                animate={{ scale: [1, 1.04, 1] }}
+                transition={{ duration: 4, repeat: Infinity }}
+              />
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 1.8, repeat: Infinity }}
+      >
+        <span className="text-blue-400/60 text-xs tracking-widest uppercase">Scroll</span>
+        <div className="w-5 h-8 rounded-full border border-blue-400/30 flex items-start justify-center p-1">
+          <motion.div
+            className="w-1 h-2 rounded-full bg-brand-primary"
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity }}
+          />
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -100,99 +394,7 @@ export default function Home() {
   return (
     <div className="overflow-hidden">
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-[#040d1a] dark:via-[#071628] dark:to-[#0a1f40] pt-20">
-        {/* Background mesh */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-brand-primary/20 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 -left-40 w-80 h-80 bg-brand-purple/15 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/3 w-64 h-64 bg-brand-royal/10 rounded-full blur-3xl" />
-          {/* Floating dots */}
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 rounded-full bg-brand-primary/40"
-              style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 3 + Math.random() * 3, repeat: Infinity, delay: Math.random() * 3 }}
-            />
-          ))}
-        </div>
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            className="space-y-8"
-          >
-            <motion.div variants={fadeUp} custom={0}>
-              <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20 mb-4 px-4 py-1.5 text-sm font-medium">
-                Enterprise IT Solutions
-              </Badge>
-            </motion.div>
-            <motion.h1
-              variants={fadeUp}
-              custom={1}
-              className="text-5xl lg:text-6xl font-extrabold leading-tight text-card-foreground dark:text-white"
-            >
-              Transform Your Business with{" "}
-              <span className="bg-gradient-to-r from-brand-primary via-brand-royal to-brand-purple bg-clip-text text-transparent">
-                Innovative Digital Solutions
-              </span>
-            </motion.h1>
-            <motion.p variants={fadeUp} custom={2} className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-              We build professional websites, mobile applications, digital marketing campaigns, branding solutions, and hosting services that help businesses grow.
-            </motion.p>
-            <motion.div variants={fadeUp} custom={3} className="flex flex-wrap gap-4">
-              <Button asChild size="lg" className="bg-gradient-to-r from-brand-primary to-brand-purple hover:opacity-90 text-white px-8 h-12 text-base shadow-xl shadow-brand-primary/30" data-testid="hero-get-started">
-                <Link href="/contact">Get Started</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white h-12 text-base" data-testid="hero-view-portfolio">
-                <Link href="/portfolio">View Portfolio</Link>
-              </Button>
-            </motion.div>
-          </motion.div>
-
-          {/* Animated orbit logo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex items-center justify-center"
-          >
-            <div className="relative w-80 h-80 flex items-center justify-center">
-              {/* Outer ring */}
-              <motion.div
-                className="absolute w-72 h-72 rounded-full border-2 border-brand-primary/30"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-brand-primary shadow-lg shadow-brand-primary/50" />
-              </motion.div>
-              {/* Middle ring */}
-              <motion.div
-                className="absolute w-52 h-52 rounded-full border-2 border-brand-purple/40"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-brand-purple shadow-lg shadow-brand-purple/50" />
-              </motion.div>
-              {/* Inner ring */}
-              <motion.div
-                className="absolute w-36 h-36 rounded-full border border-brand-royal/30"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="absolute -right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-brand-royal" />
-              </motion.div>
-              {/* Center logo */}
-              <div className="relative z-10">
-                <div className="absolute inset-0 bg-brand-purple/30 rounded-full blur-xl scale-110" />
-                <img src="/logo.jpg" alt="Saascode" className="h-24 w-24 rounded-full relative z-10 shadow-2xl" />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <HeroCinematic />
 
       {/* STATS */}
       <section className="py-20 bg-brand-deep text-white">
