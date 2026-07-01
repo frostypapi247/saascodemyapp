@@ -19,6 +19,7 @@ import WhatsAppButton from "@/components/shared/WhatsAppButton";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 import CookieBanner from "@/components/shared/CookieBanner";
 import LoadingScreen from "@/components/shared/LoadingScreen";
+import QuoteModal from "@/components/shared/QuoteModal";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,7 @@ function App() {
             <WhatsAppButton />
             <ScrollToTop />
             <CookieBanner />
+            <QuoteModal />
           </WouterRouter>
           <Toaster />
         </TooltipProvider>
