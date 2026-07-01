@@ -43,7 +43,7 @@ export default function Navbar() {
             <img src="/logo.jpg" alt="Saascode IT Solutions" className="h-10 w-10 rounded-full relative z-10" />
           </div>
           <span className={`font-heading font-bold text-xl tracking-tight ${isScrolled ? "text-white" : "text-card-foreground dark:text-white"}`}>
-            Saascode IT
+            SAAS-CODE
           </span>
         </Link>
 

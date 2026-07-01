@@ -14,7 +14,7 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <img src="/logo.jpg" alt="Logo" className="h-12 w-12 rounded-full ring-2 ring-brand-purple" />
-              <span className="font-heading font-bold text-2xl">Saascode IT</span>
+              <span className="font-heading font-bold text-2xl">SAAS-CODE</span>
             </div>
             <p className="text-gray-300 text-sm max-w-xs">
               Empowering Innovation through Cloud-Based Solutions. We build enterprise-grade technology for businesses that want to grow.
