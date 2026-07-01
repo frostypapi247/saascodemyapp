@@ -382,6 +382,183 @@ function HeroCinematic() {
   );
 }
 
+const LIVE_METRICS = [
+  { label: "Projects Delivered This Year", value: 38, suffix: "", icon: CheckCircle, color: "text-emerald-400", bar: "bg-emerald-400", pct: 76 },
+  { label: "Active Client Projects", value: 12, suffix: "", icon: Users, color: "text-brand-primary", bar: "bg-brand-primary", pct: 60 },
+  { label: "Server Uptime", value: 99, suffix: ".9%", icon: Server, color: "text-violet-400", bar: "bg-violet-400", pct: 99.9 },
+  { label: "Avg. Response Time", value: 2, suffix: "h", icon: Zap, color: "text-amber-400", bar: "bg-amber-400", pct: 90 },
+];
+
+const TICKER_ITEMS = [
+  { icon: Globe, text: "Website launched for RetailPro Group", time: "2h ago", color: "text-blue-400" },
+  { icon: Smartphone, text: "FarmLink mobile app update deployed", time: "5h ago", color: "text-green-400" },
+  { icon: Palette, text: "Brand identity delivered to Boutique Luxe", time: "1d ago", color: "text-purple-400" },
+  { icon: Megaphone, text: "SEO campaign started for AgriZim Trading", time: "1d ago", color: "text-orange-400" },
+  { icon: Video, text: "Product reel series completed for Nova Electronics", time: "2d ago", color: "text-rose-400" },
+  { icon: Server, text: "Cloud hosting migrated for HealthPlus Clinics", time: "3d ago", color: "text-cyan-400" },
+  { icon: Globe, text: "E-commerce site live for SafariTrack Adventures", time: "4d ago", color: "text-teal-400" },
+  { icon: Megaphone, text: "Google Ads campaign delivering 280% ROAS", time: "5d ago", color: "text-yellow-400" },
+];
+
+function LiveDashboard() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [counts, setCounts] = useState(LIVE_METRICS.map(() => 0));
+  const [tickerOffset, setTickerOffset] = useState(0);
+  const tickerRef = useRef<number>(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    LIVE_METRICS.forEach((m, i) => {
+      let current = 0;
+      const target = m.value;
+      const step = Math.max(1, Math.ceil(target / 60));
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        setCounts(prev => { const n = [...prev]; n[i] = current; return n; });
+        if (current >= target) clearInterval(timer);
+      }, 24);
+    });
+  }, [inView]);
+
+  useEffect(() => {
+    let raf: number;
+    const animate = () => {
+      tickerRef.current -= 0.4;
+      setTickerOffset(tickerRef.current);
+      raf = requestAnimationFrame(animate);
+    };
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const itemWidth = 300;
+  const totalWidth = TICKER_ITEMS.length * itemWidth;
+  const offset = ((tickerRef.current % totalWidth) - totalWidth) % totalWidth;
+
+  return (
+    <section ref={ref} className="py-20 bg-[#060f22] text-white relative overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-primary/8 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-brand-purple/8 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex items-center justify-between mb-12 flex-wrap gap-4"
+        >
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="relative flex items-center gap-2">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+                </span>
+                <span className="text-green-400 text-xs font-bold tracking-widest uppercase">Live</span>
+              </div>
+              <span className="text-white/30 text-xs">•</span>
+              <span className="text-white/50 text-xs">Updated in real time</span>
+            </div>
+            <h2 className="text-3xl font-extrabold text-white">Activity Dashboard</h2>
+            <p className="text-white/50 text-sm mt-1">A live look at what we're building right now</p>
+          </div>
+          <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2">
+            <TrendingUp className="h-4 w-4 text-green-400" />
+            <span className="text-white/70 text-sm font-medium">All systems operational</span>
+          </div>
+        </motion.div>
+
+        {/* Metrics grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          {LIVE_METRICS.map((m, i) => {
+            const Icon = m.icon;
+            return (
+              <motion.div
+                key={m.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/8 hover:border-white/20 transition-all"
+                data-testid={`live-metric-${i}`}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="h-9 w-9 rounded-xl bg-white/10 flex items-center justify-center">
+                    <Icon className={`h-4 w-4 ${m.color}`} />
+                  </div>
+                  <span className="text-white/30 text-xs">{m.pct}%</span>
+                </div>
+                <div className={`text-4xl font-extrabold mb-1 ${m.color}`}>
+                  {counts[i]}{m.suffix}
+                </div>
+                <p className="text-white/50 text-xs mb-4 leading-tight">{m.label}</p>
+                {/* Progress bar */}
+                <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                  <motion.div
+                    className={`h-full ${m.bar} rounded-full`}
+                    initial={{ width: 0 }}
+                    animate={inView ? { width: `${m.pct}%` } : { width: 0 }}
+                    transition={{ duration: 1.5, delay: i * 0.15, ease: "easeOut" }}
+                  />
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Recent activity ticker */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden"
+        >
+          <div className="flex items-center gap-3 px-5 py-3 border-b border-white/10">
+            <div className="h-2 w-2 rounded-full bg-brand-primary animate-pulse" />
+            <span className="text-white/60 text-xs font-medium tracking-widest uppercase">Recent Activity</span>
+          </div>
+          <div className="relative overflow-hidden py-3" style={{ height: 52 }}>
+            {/* Left fade */}
+            <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style={{ background: "linear-gradient(90deg, #060f22 0%, transparent 100%)" }} />
+            {/* Right fade */}
+            <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style={{ background: "linear-gradient(270deg, #060f22 0%, transparent 100%)" }} />
+            {/* Scrolling track — two copies for seamless loop */}
+            <div
+              className="absolute flex items-center gap-0"
+              style={{ transform: `translateX(${offset}px)`, willChange: "transform" }}
+            >
+              {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={i}
+                    className="flex items-center gap-2.5 px-5 whitespace-nowrap"
+                    style={{ minWidth: itemWidth }}
+                  >
+                    <div className="h-7 w-7 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                      <Icon className={`h-3.5 w-3.5 ${item.color}`} />
+                    </div>
+                    <div>
+                      <p className="text-white/80 text-xs font-medium">{item.text}</p>
+                      <p className="text-white/30 text-[10px]">{item.time}</p>
+                    </div>
+                    <div className="h-5 w-px bg-white/10 ml-3 shrink-0" />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -427,6 +604,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* LIVE DASHBOARD */}
+      <LiveDashboard />
 
       {/* SERVICES OVERVIEW */}
       <section className="py-24 bg-background">
