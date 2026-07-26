@@ -13,7 +13,7 @@ import { SiReact, SiNextdotjs, SiTypescript, SiNodedotjs, SiTailwindcss, SiDocke
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
-  visible: (i = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" } }),
+  visible: (i = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" as const } }),
 };
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -136,6 +136,7 @@ function HeroCinematic() {
       } else {
         setWordIndex((p) => (p + 1) % WORDS.length);
         setTyping(true);
+        return;
       }
     }
   }, [displayed, typing, wordIndex]);
