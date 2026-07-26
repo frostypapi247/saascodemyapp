@@ -1,4 +1,4 @@
-import express, { type Express } from "express";
+import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import cors from "cors";
 import pinoHttp from "pino-http";
 import { clerkMiddleware } from "@clerk/express";
@@ -33,6 +33,13 @@ app.use(
   }),
 );
 
+// Health check — mounted before Clerk middleware so the deployment startup
+// probe always gets a fast 200 regardless of Clerk's async JWKS/environment
+// initialization state on the first production request.
+app.get("/api/healthz", (_req, res) => {
+  res.json({ status: "ok" });
+});
+
 // Clerk proxy must come before body parsers (streams raw bytes)
 app.use(CLERK_PROXY_PATH, clerkProxyMiddleware());
 
@@ -50,5 +57,16 @@ app.use(
 );
 
 app.use("/api", router);
+
+// Global error handler — catches any unhandled middleware errors and returns
+// a clean JSON 500 instead of letting Express send an empty/opaque response.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  const message = err instanceof Error ? err.message : "Internal server error";
+  logger.error({ err }, "Unhandled error");
+  if (!res.headersSent) {
+    res.status(500).json({ error: message });
+  }
+});
 
 export default app;
