@@ -33,10 +33,14 @@ app.use(
   }),
 );
 
-// Health check — mounted before Clerk middleware so the deployment startup
-// probe always gets a fast 200 regardless of Clerk's async JWKS/environment
-// initialization state on the first production request.
+// Health / liveness routes — mounted before Clerk middleware so both the
+// startup probe (/api/healthz) and the ongoing keepalive probe (/api) always
+// get a fast 200 regardless of Clerk's async JWKS/environment initialization
+// state on the first production request.
 app.get("/api/healthz", (_req, res) => {
+  res.json({ status: "ok" });
+});
+app.get("/api", (_req, res) => {
   res.json({ status: "ok" });
 });
 
