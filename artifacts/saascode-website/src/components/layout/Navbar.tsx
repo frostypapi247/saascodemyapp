@@ -39,8 +39,16 @@ export default function Navbar() {
           : "bg-transparent py-4"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        {/* Logo */}
+      {/*
+        Three-column flex layout on desktop (lg+):
+          col 1 — logo (shrink-0, left)
+          col 2 — nav links (flex-1, centered)
+          col 3 — action buttons (shrink-0, right)
+        Below lg: logo left, hamburger right (ml-auto).
+      */}
+      <div className="container mx-auto px-4 md:px-6 flex items-center gap-4">
+
+        {/* ── Logo — always visible, always left ── */}
         <Link href="/" className="flex items-center gap-2.5 group shrink-0">
           <div className="relative">
             <div className="absolute inset-0 bg-brand-purple rounded-full blur-md opacity-50 group-hover:opacity-80 transition-opacity" />
@@ -55,24 +63,25 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-5">
+        {/* ── Desktop nav links — centered in remaining space ── */}
+        <nav className="hidden lg:flex flex-1 items-center justify-center gap-5">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-brand-primary ${
+              className={`text-sm font-medium transition-colors hover:text-brand-primary whitespace-nowrap ${
                 location === link.href
                   ? "text-brand-primary"
-                  : isScrolled
-                  ? "text-gray-200"
                   : "text-white/90"
               }`}
             >
               {link.label}
             </Link>
           ))}
+        </nav>
 
+        {/* ── Desktop action buttons — always right ── */}
+        <div className="hidden lg:flex items-center gap-2 shrink-0">
           <Button
             variant="ghost"
             size="icon"
@@ -95,7 +104,7 @@ export default function Navbar() {
 
           {/* Auth — signed in */}
           <Show when="signed-in">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <div className="flex items-center gap-2 text-sm text-white/90">
                 <div className="h-7 w-7 rounded-full bg-gradient-to-br from-brand-primary to-brand-purple flex items-center justify-center shrink-0">
                   {user?.imageUrl ? (
@@ -108,7 +117,7 @@ export default function Navbar() {
                     <User className="h-4 w-4 text-white" />
                   )}
                 </div>
-                <span className="font-medium hidden lg:inline">
+                <span className="font-medium hidden xl:inline">
                   {user?.firstName ?? user?.emailAddresses?.[0]?.emailAddress?.split("@")[0]}
                 </span>
               </div>
@@ -130,29 +139,30 @@ export default function Navbar() {
           >
             <Link href="/contact">Get Started</Link>
           </Button>
-        </nav>
+        </div>
 
-        {/* Mobile Toggle */}
-        <div className="flex items-center gap-2 md:hidden">
+        {/* ── Mobile/tablet toggle — visible below lg, always right ── */}
+        <div className="flex items-center gap-1 lg:hidden ml-auto">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="text-white/90 hover:bg-white/10"
+            className="text-brand-primary hover:bg-brand-primary/10"
           >
             {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </Button>
           <button
-            className="text-white/90 p-1 rounded-md hover:bg-white/10 transition-colors"
+            className="text-brand-primary p-1.5 rounded-md hover:bg-brand-primary/10 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu — dark glassmorphism sheet */}
+      {/* ── Mobile / tablet slide-down menu ── */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -160,7 +170,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className="md:hidden absolute top-full left-0 w-full bg-[#040d1a]/95 backdrop-blur-md border-t border-white/10 shadow-2xl px-4 py-3 flex flex-col gap-1"
+            className="lg:hidden absolute top-full left-0 w-full bg-[#040d1a]/95 backdrop-blur-md border-t border-white/10 shadow-2xl px-4 py-3 flex flex-col gap-1"
           >
             {navLinks.map((link) => (
               <Link
