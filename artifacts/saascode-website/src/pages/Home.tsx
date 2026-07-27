@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link } from "wouter";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,6 @@ import {
   Star, ChevronDown, ChevronUp, ArrowRight, Code, Cloud,
   BarChart2, Shield, Zap, Users, CheckCircle, TrendingUp
 } from "lucide-react";
-import { SiReact, SiNextdotjs, SiTypescript, SiNodedotjs, SiTailwindcss, SiDocker, SiPostgresql, SiMongodb } from "react-icons/si";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -75,17 +74,6 @@ const blogPosts = [
   { tag: "Web Development", title: "10 Essential Features Every Business Website Needs in 2026", date: "June 15, 2026", read: "5 min" },
   { tag: "Digital Marketing", title: "How AI is Revolutionizing Digital Marketing for African Businesses", date: "June 8, 2026", read: "7 min" },
   { tag: "Mobile Apps", title: "React Native vs Flutter: Which Should You Choose for Your Next App?", date: "June 1, 2026", read: "6 min" },
-];
-
-const techStack = [
-  { icon: SiReact, name: "React" },
-  { icon: SiNextdotjs, name: "Next.js" },
-  { icon: SiTypescript, name: "TypeScript" },
-  { icon: SiNodedotjs, name: "Node.js" },
-  { icon: SiMongodb, name: "MongoDB" },
-  { icon: SiTailwindcss, name: "Tailwind" },
-  { icon: SiDocker, name: "Docker" },
-  { icon: SiPostgresql, name: "PostgreSQL" },
 ];
 
 const WORDS = ["Websites", "Mobile Apps", "Digital Marketing", "Brand Identity", "Cloud Hosting", "Video Content"];
@@ -249,20 +237,20 @@ function HeroCinematic() {
           </motion.div>
 
           <motion.div variants={fadeUp} custom={1} className="space-y-3">
-            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight text-white">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white">
               We Build World-Class
             </h1>
-            <div className="text-5xl lg:text-6xl font-extrabold leading-tight min-h-[1.2em] flex items-center">
+            <div className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight min-h-[1.2em] flex items-center">
               <span className="bg-gradient-to-r from-[#109EF4] via-[#1E56E6] to-[#7B4DFF] bg-clip-text text-transparent">
                 {displayed}
               </span>
               <motion.span
-                className="ml-1 inline-block w-1 h-14 bg-brand-primary rounded-full"
+                className="ml-1 inline-block w-1 h-[1em] bg-brand-primary rounded-full"
                 animate={{ opacity: [1, 0, 1] }}
                 transition={{ duration: 0.8, repeat: Infinity }}
               />
             </div>
-            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight text-white/80">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white/80">
               For Your Business
             </h1>
           </motion.div>
@@ -303,7 +291,7 @@ function HeroCinematic() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="flex items-center justify-center"
+          className="hidden lg:flex items-center justify-center"
         >
           <div className="relative w-80 h-80 flex items-center justify-center">
             {/* Glow base */}
@@ -619,7 +607,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20 mb-4">Our Services</Badge>
-            <h2 className="text-4xl font-extrabold text-card-foreground dark:text-white mb-4">Everything Your Business Needs</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-card-foreground dark:text-white mb-4">Everything Your Business Needs</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">From digital presence to enterprise systems, we deliver end-to-end technology solutions that drive real results.</p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -669,7 +657,7 @@ export default function Home() {
             className="space-y-6"
           >
             <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20">About Saascode</Badge>
-            <h2 className="text-4xl font-extrabold text-card-foreground dark:text-white leading-tight">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-card-foreground dark:text-white leading-tight">
               Building Africa's Digital Future, One Solution at a Time
             </h2>
             <p className="text-muted-foreground leading-relaxed">
@@ -732,7 +720,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20 mb-4">Testimonials</Badge>
-            <h2 className="text-4xl font-extrabold text-card-foreground dark:text-white mb-4">What Our Clients Say</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-card-foreground dark:text-white mb-4">What Our Clients Say</h2>
             <p className="text-muted-foreground">Trusted by businesses across Zimbabwe and beyond</p>
           </motion.div>
 
@@ -773,41 +761,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TECH STACK */}
-      <section className="py-20 bg-secondary/30">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-card-foreground dark:text-white mb-2">Technologies We Master</h2>
-            <p className="text-muted-foreground text-sm">Cutting-edge tools for enterprise-grade solutions</p>
-          </motion.div>
-          <div className="flex flex-wrap justify-center gap-6">
-            {techStack.map((tech, i) => {
-              const Icon = tech.icon;
-              return (
-                <motion.div
-                  key={tech.name}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.07 }}
-                  whileHover={{ y: -4 }}
-                  className="flex flex-col items-center gap-2 bg-white dark:bg-card rounded-xl px-6 py-4 shadow-sm border border-border hover:border-brand-primary/30 hover:shadow-md transition-all"
-                >
-                  <Icon className="h-8 w-8 text-foreground" />
-                  <span className="text-xs font-medium text-muted-foreground">{tech.name}</span>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* BLOG PREVIEW */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20 mb-4">Blog & Insights</Badge>
-            <h2 className="text-4xl font-extrabold text-card-foreground dark:text-white mb-4">Latest from Our Team</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-card-foreground dark:text-white mb-4">Latest from Our Team</h2>
             <p className="text-muted-foreground">Expert insights on technology, business, and digital transformation</p>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -847,7 +806,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6 max-w-3xl">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20 mb-4">FAQ</Badge>
-            <h2 className="text-4xl font-extrabold text-card-foreground dark:text-white mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-card-foreground dark:text-white mb-4">Frequently Asked Questions</h2>
             <p className="text-muted-foreground">Everything you need to know about working with Saascode</p>
           </motion.div>
           <div className="space-y-3">
@@ -887,7 +846,7 @@ export default function Home() {
       <section className="py-24 bg-gradient-to-r from-brand-deep via-brand-royal to-brand-primary text-white">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="space-y-6 max-w-2xl mx-auto">
-            <h2 className="text-4xl font-extrabold leading-tight">Ready to Transform Your Business?</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold leading-tight">Ready to Transform Your Business?</h2>
             <p className="text-blue-100 text-lg">Let's build something extraordinary together. Get in touch and let's discuss your project.</p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button asChild size="lg" className="bg-white text-brand-deep hover:bg-blue-50 font-bold px-8">

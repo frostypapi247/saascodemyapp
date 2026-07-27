@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "wouter";
 import { Facebook, Instagram, Linkedin, Send, Phone, Mail, MapPin } from "lucide-react";
 import { SiTiktok } from "react-icons/si";
@@ -9,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="bg-brand-deep text-white pt-16 pb-8 border-t-4 border-brand-primary">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
           {/* Brand Col */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">

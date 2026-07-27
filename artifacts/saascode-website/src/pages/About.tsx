@@ -1,3 +1,4 @@
+import { type ElementType } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -14,13 +15,6 @@ const values = [
   { icon: Star, title: "Quality", desc: "We are committed to delivering excellence — every project, every time, without compromise.", color: "from-purple-500 to-violet-600" },
   { icon: Users, title: "Customer Success", desc: "Your growth and success is the primary metric we measure ourselves against.", color: "from-green-500 to-emerald-600" },
   { icon: Zap, title: "Reliability", desc: "We deliver on our promises — on time, within budget, and beyond expectations.", color: "from-rose-500 to-pink-600" },
-];
-
-const team = [
-  { name: "Takudzwa Maponde", role: "CEO & Founder", bio: "10+ years in enterprise software. Led digital transformation projects for Fortune 500 clients." },
-  { name: "Shumirai Dube", role: "CTO", bio: "Cloud architecture expert. AWS Certified Solutions Architect with expertise in scalable systems." },
-  { name: "Rudo Chivanga", role: "Head of Design", bio: "Award-winning designer with a portfolio spanning Fortune 500 brands and African enterprises." },
-  { name: "Farai Nyamande", role: "Head of Marketing", bio: "Digital marketing strategist with a track record of delivering 3x-10x ROI for clients across industries." },
 ];
 
 const timeline = [
@@ -44,9 +38,9 @@ const whyChooseUs = [
 
 export default function About() {
   return (
-    <div className="overflow-hidden pt-16">
+    <div className="overflow-x-hidden pt-16">
       {/* Hero */}
-      <section className="relative py-28 bg-gradient-to-br from-brand-deep via-brand-royal to-[#1a3a8f] text-white overflow-hidden">
+      <section className="relative py-20 md:py-28 bg-gradient-to-br from-brand-deep via-brand-royal to-[#1a3a8f] text-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute -top-20 -right-20 w-96 h-96 bg-brand-purple/20 rounded-full blur-3xl" />
           <div className="absolute bottom-0 -left-20 w-80 h-80 bg-brand-primary/20 rounded-full blur-3xl" />
@@ -54,13 +48,13 @@ export default function About() {
         <div className="container mx-auto px-4 md:px-6 text-center relative z-10">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <Badge className="bg-white/20 text-white border-white/30 mb-4">Our Story</Badge>
-            <h1 className="text-5xl font-extrabold mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
               Empowering Innovation through{" "}
               <span className="bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
                 Cloud-Based Solutions
               </span>
             </h1>
-            <p className="text-blue-100 text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
               We are a team of passionate technologists dedicated to helping businesses across Africa harness the power of digital transformation.
             </p>
           </motion.div>
@@ -68,11 +62,11 @@ export default function About() {
       </section>
 
       {/* Company Overview */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 md:px-6 grid lg:grid-cols-2 gap-16 items-center">
+      <section className="py-20 md:py-24 bg-background">
+        <div className="container mx-auto px-4 md:px-6 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-6">
             <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20">Company Overview</Badge>
-            <h2 className="text-4xl font-extrabold text-card-foreground dark:text-white">Who We Are</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-card-foreground dark:text-white">Who We Are</h2>
             <p className="text-muted-foreground leading-relaxed">
               SaasCode IT Solutions is a full-service digital transformation company based in Zimbabwe. We provide comprehensive technology services to startups, small and medium enterprises (SMEs), corporate organizations, and large enterprises.
             </p>
@@ -95,7 +89,7 @@ export default function About() {
             <div className="grid grid-cols-2 gap-5">
               {[["Mission", Target, "To empower businesses through innovative technology solutions that drive growth, efficiency, and competitive advantage."],
                 ["Vision", Eye, "To be Africa's leading digital transformation partner, recognized for excellence, innovation, and measurable impact."]].map(([title, Icon, text]) => {
-                const I = Icon as React.ElementType;
+                const I = Icon as ElementType;
                 return (
                   <div key={title as string} className="col-span-2 bg-white dark:bg-card rounded-2xl p-6 border border-border shadow-sm">
                     <div className="flex items-center gap-3 mb-3">
@@ -114,14 +108,14 @@ export default function About() {
       </section>
 
       {/* Values */}
-      <section className="py-24 bg-secondary/30">
+      <section className="py-20 md:py-24 bg-secondary/30">
         <div className="container mx-auto px-4 md:px-6">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12 md:mb-16">
             <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20 mb-4">Core Values</Badge>
-            <h2 className="text-4xl font-extrabold text-card-foreground dark:text-white mb-4">What Drives Us</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-card-foreground dark:text-white mb-4">What Drives Us</h2>
             <p className="text-muted-foreground max-w-xl mx-auto">Our values are not just words on a wall — they guide every decision, every project, and every client interaction.</p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map((v, i) => {
               const Icon = v.icon;
               return (
@@ -150,51 +144,12 @@ export default function About() {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20 mb-4">Meet the Team</Badge>
-            <h2 className="text-4xl font-extrabold text-card-foreground dark:text-white mb-4">The People Behind the Excellence</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">A dedicated team of experts passionate about building technology that makes a difference.</p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member, i) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -4 }}
-                data-testid={`team-card-${i}`}
-              >
-                <Card className="h-full text-center border-border hover:border-brand-primary/30 hover:shadow-lg transition-all overflow-hidden">
-                  <div className="h-32 bg-gradient-to-br from-brand-primary/20 via-brand-royal/20 to-brand-purple/20 relative">
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
-                      <div className="h-20 w-20 rounded-full bg-gradient-to-br from-brand-primary to-brand-purple flex items-center justify-center text-white text-3xl font-bold ring-4 ring-white dark:ring-card shadow-lg">
-                        {member.name.split(" ").map(n => n[0]).join("")}
-                      </div>
-                    </div>
-                  </div>
-                  <CardContent className="pt-14 pb-6 px-4">
-                    <h3 className="font-bold text-card-foreground text-lg">{member.name}</h3>
-                    <p className="text-brand-primary text-sm font-medium mb-3">{member.role}</p>
-                    <p className="text-muted-foreground text-xs leading-relaxed">{member.bio}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Timeline */}
-      <section className="py-24 bg-brand-deep text-white">
+      <section className="py-20 md:py-24 bg-brand-deep text-white">
         <div className="container mx-auto px-4 md:px-6">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12 md:mb-16">
             <Badge className="bg-white/20 text-white border-white/30 mb-4">Our Journey</Badge>
-            <h2 className="text-4xl font-extrabold mb-4">A Story of Growth</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">A Story of Growth</h2>
             <p className="text-blue-200 max-w-xl mx-auto">From a bold idea to Africa's rising digital transformation partner.</p>
           </motion.div>
           <div className="relative max-w-3xl mx-auto">
@@ -237,14 +192,14 @@ export default function About() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-24 bg-background">
+      <section className="py-20 md:py-24 bg-background">
         <div className="container mx-auto px-4 md:px-6">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12 md:mb-16">
             <Badge className="bg-brand-primary/10 text-brand-primary border-brand-primary/20 mb-4">Why Saascode</Badge>
-            <h2 className="text-4xl font-extrabold text-card-foreground dark:text-white mb-4">Why Choose Us</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-card-foreground dark:text-white mb-4">Why Choose Us</h2>
             <p className="text-muted-foreground max-w-xl mx-auto">We don't just build technology — we build long-term partnerships built on trust, excellence, and results.</p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {whyChooseUs.map((item, i) => {
               const Icon = item.icon;
               return (
