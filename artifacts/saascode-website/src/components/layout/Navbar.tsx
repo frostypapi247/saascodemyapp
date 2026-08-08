@@ -5,6 +5,7 @@ import { Menu, X, Sun, Moon, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useUser, useClerk, Show } from "@clerk/react";
 import { motion, AnimatePresence } from "framer-motion";
+import saascodeLogo from "@/assets/saascode-logo.svg";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,7 +54,7 @@ export default function Navbar() {
           <div className="relative">
             <div className="absolute inset-0 bg-brand-purple rounded-full blur-md opacity-50 group-hover:opacity-80 transition-opacity" />
             <img
-              src="/logo.jpg"
+              src={saascodeLogo}
               alt="Saascode IT Solutions"
               className="h-14 w-14 rounded-full relative z-10"
             />
